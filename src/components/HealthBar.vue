@@ -9,6 +9,9 @@
 <script>
 export default {
   props: ['health'],
+  computed: {
+
+  }
 }
 </script>
 
@@ -24,7 +27,7 @@ export default {
 }
 .healthbar{
   background: #c54;
-  width: 100%;
+  width: this.health + '%';
   height: 20px;
   position: relative;
 
