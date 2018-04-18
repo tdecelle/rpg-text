@@ -2,7 +2,7 @@
 <div>
   <h1>Monster</h1>
   <h3>Level {{ level }}</h3>
-  <healthBar :health="health"></healthBar>
+  <healthBar :current="health" :total="healthTotal"></healthBar>
   <button type="button" @click="getPunch">Punch</button>
   <button type="button" @click="create">Create</button>
 </div>
@@ -18,15 +18,19 @@ export default {
   },
   data: function() {
     return {
-      health: 100
+      health: this.level*100,
+      healthTotal: this.level*100
     }
+  },
+  computed: {
+
   },
   methods: {
     create: function(){
       this.health = this.calculateHealth();
     },
     calculateHealth: function(){
-      return 100;
+      return this.level*100;
     },
     getPunch: function(){
       this.health -= 10;

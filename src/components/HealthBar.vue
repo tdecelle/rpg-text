@@ -1,23 +1,20 @@
 <template lang="html">
   <div>
-    <div class="healthbar text-center">
-      {{ health }}
+    <div class="healthbar" :style="{width: (current/total)*100 + '%'}">
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['health'],
-  computed: {
-
-  }
+  props: ['current', 'total']
 }
 </script>
 
 <style lang="css" scoped>
-{
-  width: 200px;
+div{
+  box-sizing: border-box;
+  width: 100%;
   height: 30px;
   padding: 5px;
   background: #ddd;
@@ -27,10 +24,11 @@ export default {
 }
 .healthbar{
   background: #c54;
-  width: this.health + '%';
   height: 20px;
   position: relative;
-
   transition: width .5s linear;
+}
+span{
+  width: 100%
 }
 </style>
