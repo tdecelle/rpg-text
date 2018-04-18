@@ -3,13 +3,13 @@
     <div class="player-side">
       <h1>Level {{ level }}</h1>
       <healthbar :current="health" :total="healthTotal"></healthbar>
+      <button v-if="!gameIsRunning" type="button" @click="startGame">Start Game</button>
     </div>
-    <div class="monster-side">
+    <div v-if="gameIsRunning" class="monster-side">
       <template v-for="monsterLevel in monsterLevels">
-        <monster :level=monsterLevel></monster>
+        <monster :level=monsterLevel @destroy="destroy($event)"></monster>
       </template>
     </div>
-    <button type="button" @click="startGame">Start Game</button>
   </div>
 </template>
 
@@ -32,26 +32,37 @@ export default {
       monsterLevels: [1,2,3,4,5]
     }
   },
+  created: function() {
+    console.log(this.level);
+    this.health = this.level*200;
+    this.healthTotal = this.health;
+  },
   methods: {
     getHealth: function() {
       this.health = this.level*200;
       this.total = this.level*200;
     },
+    getMonsters: function() {
+      this.monsterLevels = [1,2,3,4,5];
+    },
     startGame: function() {
+      console.log("STARTING");
       this.getHealth();
+      this.getMonsters();
       this.gameIsRunning = true;
-      while(this.gameIsRunning) {
-        setTimeout(this.gameLoop, 3000);
-      }
+
+       setTimeout(() => {this.gameLoop();}, 3000);
     },
     gameLoop: function() {
       console.log("Loop");
       this.monsterAttack();
       console.log("Player Health: " + this.health);
-      if(this.health <= 0 || this.monsterLevels.length == 0) {
+      if(this.health <= 0 || this.monsterLevels.length <= 0) {
         this.gameIsRunning = false;
       }
-      console.log(this.gameLooping);
+      else {
+        setTimeout(() => {this.gameLoop();}, 3000); //reloop
+      }
     },
     monsterAttack: function() {
       let attack = 0;
@@ -59,6 +70,17 @@ export default {
         attack += this.monsterLevels[i];
       }
       this.health -= attack;
+    },
+    destroy: function(level) {
+      console.log(level);
+      for(let i = 0; i < this.monsterLevels.length; i++){
+        if(level === this.monsterLevels[i]) {
+          console.log("FOUND IT");
+          this.monsterLevels.splice(i, 1);
+        }
+      }
+      console.log(this.monsterLevels);
+      console.log("Something is dead!");
     }
   }
 }
