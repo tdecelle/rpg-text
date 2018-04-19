@@ -10,6 +10,7 @@
         <monster :level=monsterLevel @destroy="destroy($event)"></monster>
       </template>
     </div>
+    <footer><a href="https://github.com/tdecelle/rpg-text">Github</a></footer>
   </div>
 </template>
 
@@ -94,5 +95,25 @@ export default {
 .monster-side{
   float: right;
   width: 50%;
+}
+footer a{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+footer a:active{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  text-decoration: none;
 }
 </style>
